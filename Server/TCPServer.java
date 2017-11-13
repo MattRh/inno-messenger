@@ -140,7 +140,7 @@ class TCPServer extends Thread {
 			// counter of connections
 			int i = 0;
 			// create server
-			ServerSocket server = new ServerSocket(port, 0, InetAddress.getByName("localhost"));
+			ServerSocket server = new ServerSocket(port);
 			// start notification
 			System.out.println("server is started");
 			// infinite poll
