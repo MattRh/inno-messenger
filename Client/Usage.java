@@ -1,22 +1,26 @@
+import java.util.Arrays;
 
 public class Usage {
 
-	public static void main(String[] args) {
-		// Create client
-		TCPClient client = new TCPClient("localhost", 3128);
+    public static void main(String[] args) {
+        // Create client
+        TCPClient client = new TCPClient("localhost", 3129);//138.197.176.233
 
-		// Send bytes to server
-		client.sendMessage(new byte[800000000]);
+        // Send bytes to server
+        //System.out.println(client.sendMessage("Hello".getBytes()));
 
-		// Get messages
-		byte[][] result = client.getMessages(0);
+        //Request server to delete all messages
+        //System.out.println(client.requestClear());
 
-		// print result
-		if (result == null) {
-			System.exit(0);
-		}
-		for (int i = 0; i < result.length; i++) {
-			System.out.println(result[i].length);
-		}
-	}
+        // Get messages
+        byte[][] result = client.getMessages(0);
+
+        //System.out.println("result "+result);
+        // print result
+        if (result != null) {
+            for (int i = 0; i < result.length; i++) {
+                System.out.println(i + ") " + new String(result[i]));
+            }
+        }
+    }
 }
