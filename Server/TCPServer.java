@@ -15,7 +15,7 @@ class TCPServer extends Thread {
     int num;
 
     /**
-     * Try to connect to database, if there is no .db file - create one
+     * Create table in newly initialised .db file
      *
      * @return True if no error occurred during connection
      */
@@ -66,6 +66,7 @@ class TCPServer extends Thread {
      */
     synchronized private boolean clearTable() {
         Statement statement = null;
+        Statement delStatement = null;
         try {
             statement = connection.createStatement();
             // construct query
@@ -73,7 +74,15 @@ class TCPServer extends Thread {
             statement.executeUpdate(query);
             // commit changes
             connection.commit();
+            //construct key clearance query
+            delStatement = connection.createStatement();
+            //execute query
+            String resetCounterQuery = "DELETE FROM SQLITE_SEQUENCE WHERE name='messages'";
+            delStatement.executeUpdate(resetCounterQuery);
+            //commit changes
+            connection.commit();
             statement.close();
+            delStatement.close();
             return true;
         } catch (Exception e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
